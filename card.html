@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Card</title>
+
+    <style>
+      :root {
+        --pink-bg: #fde3ea;
+        --pink-accent: #ff4f93;
+        --card: #ffffff;
+        --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        --border: rgba(255, 79, 147, 0.18);
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--pink-bg);
+        background-image:
+          radial-gradient(
+            1200px 600px at 20% 0%,
+            rgba(255, 255, 255, 0.35),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 80% 20%,
+            rgba(255, 255, 255, 0.25),
+            transparent 55%
+          );
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        box-sizing: border-box;
+        overflow: hidden;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          sans-serif;
+      }
+
+      /* Book must be almost as large as the mobile screen */
+      .book {
+        position: relative;
+        border-radius: 16px;
+        width: min(92vw, 520px);
+        height: min(86vh, 760px);
+        background: linear-gradient(180deg, #fff7fb, #fff1f7);
+        border: 2px solid var(--border);
+        box-shadow:
+          inset 0 0 26px rgba(255, 79, 147, 0.08),
+          var(--shadow);
+        transform-style: preserve-3d;
+        perspective: 2000px;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        color: rgba(34, 34, 34, 0.92);
+      }
+
+      .page {
+        flex: 1 1 auto;
+        padding: 20px 18px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: hidden;
+      }
+
+      .page h1 {
+        margin: 0;
+        color: var(--pink-accent);
+        font-family: "Segoe Script", "Comic Sans MS", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: clamp(24px, 4.8vw, 34px);
+        line-height: 1.12;
+      }
+
+      .page .message {
+        margin: 0;
+        font-size: clamp(16px, 3.9vw, 20px);
+        line-height: 1.55;
+        font-weight: 520;
+        overflow-y: auto;
+        padding-right: 10px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .cover {
+        top: 0;
+        left: 0;
+        position: absolute;
+        background:
+          radial-gradient(
+            520px 320px at 70% 10%,
+            rgba(255, 79, 147, 0.09),
+            rgba(255, 255, 255, 0) 55%
+          ),
+          linear-gradient(
+            160deg,
+            rgba(255, 79, 147, 0.14),
+            rgba(255, 143, 182, 0.1)
+          ),
+          var(--card);
+        width: 100%;
+        height: 100%;
+        border-radius: 16px;
+        cursor: pointer;
+        /* Smooth open/close animation (click toggles .open) */
+        transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+        transform-origin: 0;
+        box-shadow:
+          inset 0 0 22px rgba(34, 13, 24, 0.08),
+          var(--shadow);
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        box-sizing: border-box;
+        text-align: center;
+        user-select: none;
+      }
+
+      .cover:focus-visible {
+        outline: 3px solid rgba(255, 79, 147, 0.5);
+        outline-offset: 4px;
+      }
+
+      .cover .cover-title {
+        margin: 0;
+        color: var(--pink-accent);
+        font-family: "Segoe Script", "Comic Sans MS", system-ui, sans-serif;
+        font-weight: 800;
+        font-size: clamp(28px, 7.2vw, 46px);
+        line-height: 1.1;
+      }
+
+      .cover .cover-sub {
+        margin: 10px 0 0;
+        font-weight: 650;
+        font-size: clamp(14px, 3.7vw, 18px);
+        color: rgba(34, 34, 34, 0.75);
+      }
+
+      /* Desktop hover + mobile tap (via .open class) */
+      @media (hover: hover) and (pointer: fine) {
+        .book:hover .cover {
+          transform: rotateY(-120deg);
+        }
+      }
+
+      .book.open .cover {
+        transform: rotateY(-120deg);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="book" id="book">
+      <div class="page" aria-label="Letter">
+        <h1>Happy Valentine’s Day</h1>
+        <p class="message">
+          Happy Valentine's Day jobi, I just wanted to say I'm very grateful na
+          makilala ka. I may not always say it to you but everything i feel for
+          you is real and you matter to me a lot.<br />
+          <br />
+          I want to let you know how much you mean to me. every day with you is
+          special. You make each day feel so gaan and even the small moments we
+          share makes me really happy. ❤️
+          <br />
+          <br />
+          You are the reason why I smile every day. And if I ever get the chance
+          to be the one beside you a little more, I’d gladly choose that every
+          single time. <br />
+          <br />
+          I hope we can make more memories together and I want you to know that
+          I’m here for you, always. 😊<br />
+        </p>
+      </div>
+
+      <button class="cover" type="button" id="cover" aria-label="Open card">
+        <div>
+          <p class="cover-title">For You</p>
+          <p class="cover-sub">Tap to open</p>
+        </div>
+      </button>
+    </div>
+
+    <script>
+      (function () {
+        const book = document.getElementById("book");
+        const cover = document.getElementById("cover");
+        if (!book || !cover) return;
+
+        const toggle = () => book.classList.toggle("open");
+        cover.addEventListener("click", toggle);
+        cover.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        });
+      })();
+    </script>
+
+    <script src="music.js"></script>
+  </body>
+</html>
